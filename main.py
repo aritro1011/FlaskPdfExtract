@@ -45,18 +45,23 @@ def extract_details(entry_text):
     phone_number = re.search(phone_number_regex, entry_text)
     phone = phone_number.group(0).strip() if phone_number else None
 
-    # Extract Address (refined pattern)
+    
+    # Extract Address
     address_pattern = re.compile(
-        r'Address\s*[:\-]?\s*(\d{1,5}[\w\s,]+(?:Street|St|Avenue|Ave|Road|Rd|Lane|Boulevard|Drive|Blvd)[\w\s,]*)',
+        r'Address\s*[:\-]?\s*([\w\s,]+(?:Street|St|Avenue|Ave|Road|Rd|Lane|Boulevard|Blvd|Drive|Dr|Way|Plaza)[\w\s,]*(?:\s*\b(?:[A-Z]{2})\b\s*\d{5})?)',
         re.IGNORECASE
     )
     address_match = re.search(address_pattern, entry_text)
     address = address_match.group(1).strip() if address_match else None
 
-    # Extract Role
-    role_pattern = re.compile(r'Role\s*[:\-]?\s*(.*)', re.IGNORECASE)
+    # Extract Role (ensure it's separated from Address)
+    role_pattern = re.compile(r'\bRole\s*[:\-]?\s*([^\n]+)', re.IGNORECASE)
     role_match = re.search(role_pattern, entry_text)
     role = role_match.group(1).strip() if role_match else None
+
+    # Clean Address if it contains "\nRole"
+    if address and "\nRole" in address:
+        address = address.split("\nRole")[0].strip()
 
     # Return extracted details as a dictionary
     return {
@@ -98,5 +103,3 @@ if __name__ == "__main__":
             df = extract_multiple_details(extracted_text)
             print(df)
 
-        
-   
