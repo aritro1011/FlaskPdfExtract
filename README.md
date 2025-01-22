@@ -9,8 +9,26 @@ This is a Flask-based application that extracts and processes data using the fun
 - Organized project structure with clear separation of concerns.
 - Easy to set up and run on any system with Python installed.
 - working demo link:https://www.loom.com/share/5c6424b52bf24d69a16922fdf64a5119?sid=4090c27a-2ee8-4a94-b3f6-aabac1611a42
+  
 
 ---
+## Solution Overview
+
+The solution works as follows:
+
+### `main.py`
+This Python script contains functions to:
+- Extract raw data from a source (e.g., file, API).
+- Process and extract relevant information from the raw data.
+
+### `flask_app.py`
+This file is a basic Flask web application that:
+- Uses the functions from `main.py` to perform data extraction and processing.
+- Exposes an endpoint to interact with the frontend.
+
+### Frontend (HTML/CSS)
+A simple HTML/CSS interface is integrated into the Flask app, allowing users to interact with the backend. The frontend displays the extracted data or results processed by `main.py` through the Flask server.
+
 ## Project Structure
 ```plaintext
 .
